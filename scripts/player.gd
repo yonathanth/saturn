@@ -23,8 +23,8 @@ func _physics_process(delta: float) -> void:
 	
 	
 	if Input.is_action_just_pressed("shoot") and $LaserGun/Cooldown.is_stopped():
- 		var laser := laser_scene.instantiate()
- 	 	laser.position = $LaserGun.global_position
+		var laser := laser_scene.instantiate()
+		laser.position = $LaserGun.global_position
 		get_parent().add_child(laser)
 		$LaserGun/Cooldown.start()
 

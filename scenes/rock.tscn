@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://cfdfx64hpf24r"]
+
+[ext_resource type="Script" uid="uid://07dwn4piko2m" path="res://scripts/rock.gd" id="1_mek2u"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_872ht"]
+radius = 269.268
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1di36"]
+load_path = "res://.godot/imported/rock1.png-cbec2a4f6e0f18ef338c07471c834af6.ctex"
+
+[node name="Rock" type="RigidBody2D"]
+linear_damp = 0.1
+angular_damp = 1.0
+script = ExtResource("1_mek2u")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-10, 4)
+scale = Vector2(0.025, 0.025)
+shape = SubResource("CircleShape2D_872ht")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(6, -9)
+scale = Vector2(0.025, 0.025)
+texture = SubResource("CompressedTexture2D_1di36")
