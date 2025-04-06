@@ -13,9 +13,17 @@ extends CharacterBody2D
 @export var bullet_spawn_distance := 50.0  # Pixels in front of ship
 
 # Health System settings
-@export var max_health := 3
-var current_health: int
+@export var max_health := 10
+var current_health: float
 var is_invulnerable := false  # For temporary immunity after hit
+
+
+
+# Add to your existing variables at the top
+@export var rock_damage_scale := 0.5  # Damage multiplier based on rock size
+@export var ice_heal_amount := 1      # Health restored from ice
+var last_collision_time := 0.0        # For collision cooldown
+@export var collision_cooldown := 0.5 # Seconds between collision checks
 
 
 
@@ -24,6 +32,13 @@ func _physics_process(delta):
 	var input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	velocity = input_dir * move_speed
 	apply_screen_boundaries()
+	
+	# Detect collisions when moving
+	var collision = move_and_collide(velocity * delta)
+	if collision:
+		handle_collision(collision.get_collider())
+		
+	
 	move_and_slide()
 
 func apply_screen_boundaries():
@@ -53,6 +68,7 @@ var shoot_timer: Timer
 
 func _ready():
 	# Set up shooting timer
+	add_to_group("player")
 	shoot_timer = Timer.new()
 	add_child(shoot_timer)
 	shoot_timer.one_shot = true
@@ -60,6 +76,15 @@ func _ready():
 	
 	# health
 	current_health = max_health
+	$IceDetector.area_entered.connect(_on_ice_collected)  # Detect Area2D collisions (ice)
+
+# New function to handle ice collection
+func _on_ice_collected(area):
+	if area.is_in_group("ice"):
+		print("yuppie")
+		handle_ice_collision(area)  # Reuse your existing ice-handling function
+		
+	
 
 func _process(delta):
 	if Input.is_action_pressed("shoot") and can_shoot:
@@ -93,14 +118,14 @@ func _input(event):
 		
 # health
 
-func take_damage(amount: int):
+func take_damage(amount: float):
 	if is_invulnerable:
 		return
 	
 	current_health -= amount
-	print("Player health: ", current_health)
+	print("Player hit! Health: ", current_health, " (Lost ", amount, " HP)")
 	
-	# Flash effect (optional)
+	# Visual feedback
 	$ShipSprite.modulate = Color.RED
 	await get_tree().create_timer(0.1).timeout
 	$ShipSprite.modulate = Color.WHITE
@@ -121,6 +146,57 @@ func die():
 	get_parent().add_child(explosion)
 	
 	  # Remove player
+
+# Add this function to handle collisions
+
+		
+func handle_collision(collider):
+	var current_time = Time.get_ticks_msec() / 1000.0
+	
+	# Prevent rapid repeated collisions
+	if current_time - last_collision_time < collision_cooldown:
+		return
+	
+	last_collision_time = current_time
+	
+	# Check if collider is in a group
+	if collider.is_in_group("rocks"):
+		handle_rock_collision(collider)
+	
+
+func handle_rock_collision(rock):
+	# Calculate damage based on rock size (bigger rocks hurt more)
+	var size_ratio = rock.current_scale / rock.big_size
+	var damage = (size_ratio / rock_damage_scale)
+	print(damage)
+	take_damage(damage)
+	
+	# Small knockback effect
+	var knockback_dir = (global_position - rock.global_position).normalized()
+	velocity = knockback_dir * move_speed * 0.3
+
+func handle_ice_collision(ice):
+	# Heal player
+	current_health = min(current_health + ice_heal_amount, max_health)
+	print("Health restored! Current: ", current_health)
+	
+	# Visual feedback
+	$ShipSprite.modulate = Color.GREEN
+	await get_tree().create_timer(0.1).timeout
+	$ShipSprite.modulate = Color.WHITE
+	
+	# Remove the ice
+	ice.queue_free()
+
+
+
+
+
+
+
+
+
+
 
 func _on_shoot_timer_timeout():
 	can_shoot = true

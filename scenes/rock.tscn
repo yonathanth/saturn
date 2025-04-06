@@ -4,9 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://cowmoymo61fi5" path="res://assets/rocks/rock.png" id="2_mek2u"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_872ht"]
-radius = 64.0703
+radius = 66.0076
 
-[node name="Rock" type="RigidBody2D" groups=["asteroids"]]
+[node name="Rock" type="RigidBody2D" groups=["asteroids", "rocks"]]
 collision_layer = 5
 collision_mask = 3
 gravity_scale = 0.0

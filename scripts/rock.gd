@@ -2,7 +2,11 @@ extends RigidBody2D
 
 @export var min_size := 0.2
 @export var split_scale_factor := 0.6
-@export var initial_scale := 1.0
+
+# keep both sizes the same, trust me bro
+var big_size := 0.8
+@export var initial_scale := 0.8
+
 @export var move_speed := Vector2(-500, 0)  # Base leftward velocity
 @export var random_impulse := Vector2(100, 100)  # Randomness range
 

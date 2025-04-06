@@ -6,7 +6,8 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_oiseg"]
 radius = 1195.49
 
-[node name="IceCollectable" type="Area2D"]
+[node name="IceCollectable" type="Area2D" groups=["ice"]]
+collision_layer = 2
 script = ExtResource("1_huvy1")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
