@@ -1,54 +1,53 @@
 
 extends CharacterBody2D
-
+# movement
 # Movement settings
-@export var max_speed := 400.0
-@export var acceleration := 150.0
-@export var rotation_speed := 3.5  # Radians per second
-@export var drag_factor := 0.98    # Slowdown when not thrusting
+@export var move_speed := 300.0
+@export var screen_padding := 30.0  # Distance from edge
 
 
+# shooting settings
 # At top with other @exports
 @export var bullet_scene: PackedScene
 @export var fire_rate := 0.15  # Seconds between shots
 @export var bullet_spawn_distance := 50.0  # Pixels in front of ship
 
+# Health System settings
+@export var max_health := 3
+var current_health: int
+var is_invulnerable := false  # For temporary immunity after hit
 
 
 
-
-
-
-
-
-
-
-var current_speed := 0.0
-var direction := Vector2.ZERO
-
+# movement related functions
 func _physics_process(delta):
-	handle_rotation(delta)
-	handle_thrust()
-	apply_movement()
-
-func handle_rotation(delta):
-	var rotate_dir = Input.get_axis("ui_left", "ui_right")
-	rotation += rotate_dir * rotation_speed * delta
-
-func handle_thrust():
-	if Input.is_action_pressed("ui_up"):
-		current_speed = min(current_speed + acceleration, max_speed)
-		direction = Vector2(cos(rotation), sin(rotation))
-	else:
-		current_speed *= drag_factor  # Gradual slowdown
-
-func apply_movement():
-	velocity = direction * current_speed
+	var input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	velocity = input_dir * move_speed
+	apply_screen_boundaries()
 	move_and_slide()
 
+func apply_screen_boundaries():
+	var viewport = get_viewport_rect().size
+	global_position = global_position.clamp(
+		Vector2(screen_padding, screen_padding),
+		Vector2(viewport.x - screen_padding, viewport.y - screen_padding)
+	)
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+# shooting
 var can_shoot := true
 var shoot_timer: Timer
 
@@ -58,6 +57,9 @@ func _ready():
 	add_child(shoot_timer)
 	shoot_timer.one_shot = true
 	shoot_timer.timeout.connect(_on_shoot_timer_timeout)
+	
+	# health
+	current_health = max_health
 
 func _process(delta):
 	if Input.is_action_pressed("shoot") and can_shoot:
@@ -81,6 +83,44 @@ func shoot():
 	# Start cooldown
 	can_shoot = false
 	shoot_timer.start(fire_rate)
+	
+
+
+func _input(event):
+	# Press T key to test explosion at player position
+	if event.is_action_pressed("ui_paste"):  # Default T ke
+		die()
+		
+# health
+
+func take_damage(amount: int):
+	if is_invulnerable:
+		return
+	
+	current_health -= amount
+	print("Player health: ", current_health)
+	
+	# Flash effect (optional)
+	$ShipSprite.modulate = Color.RED
+	await get_tree().create_timer(0.1).timeout
+	$ShipSprite.modulate = Color.WHITE
+	
+	# Temporary invulnerability
+	is_invulnerable = true
+	await get_tree().create_timer(1.0).timeout
+	is_invulnerable = false
+	
+	if current_health <= 0:
+		die()
+
+func die():
+	# Spawn explosion before removing player
+	var explosion = preload("res://scenes/explosion.tscn").instantiate()
+	explosion.global_position = global_position
+	queue_free()
+	get_parent().add_child(explosion)
+	
+	  # Remove player
 
 func _on_shoot_timer_timeout():
 	can_shoot = true

@@ -6,6 +6,8 @@ extends Area2D
 var direction := Vector2.ZERO
 var distance_traveled := 0.0
 
+
+
 func _physics_process(delta):
 	var movement = direction * speed * delta
 	position += movement

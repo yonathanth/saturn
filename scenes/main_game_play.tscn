@@ -9,3 +9,4 @@
 
 [node name="Player" parent="." instance=ExtResource("1_eg5v1")]
 position = Vector2(154, 67)
+screen_padding = 50.0
