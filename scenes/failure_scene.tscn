@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://xnl3mjonyyta"]
 
-[ext_resource type="Script" uid="uid://ce3od21wt6wd6" path="res://scenes/scripts/failure_screen.gd" id="1_oyg8w"]
+[ext_resource type="Script" uid="uid://ce3od21wt6wd6" path="res://scripts/failure_screen.gd" id="1_oyg8w"]
 
 [node name="FailureScreen" type="Control"]
 layout_mode = 3
