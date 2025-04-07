@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cfdfx64hpf24r"]
 
-[ext_resource type="Script" uid="uid://07dwn4piko2m" path="res://scripts/rock.gd" id="1_mek2u"]
+[ext_resource type="Script" uid="uid://07dwn4piko2m" path="res://scenes/scripts/rock.gd" id="1_mek2u"]
 [ext_resource type="Texture2D" uid="uid://cowmoymo61fi5" path="res://assets/rocks/rock.png" id="2_mek2u"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_872ht"]
