@@ -21,3 +21,13 @@ centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 1152, 648)
 script = ExtResource("4_ktdyi")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+offset_left = 825.0
+offset_top = 33.0
+offset_right = 865.0
+offset_bottom = 56.0
+text = "Distance 0/0"
+horizontal_alignment = 2

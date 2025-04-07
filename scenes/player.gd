@@ -27,6 +27,16 @@ var last_collision_time := 0.0        # For collision cooldown
 
 
 
+# Distance tracking
+@export var target_distance := 5000.0  # Distance to travel to win (in pixels)
+var distance_covered := 0.0            # Total distance traveled
+var previous_position: Vector2         # To calculate distance per frame
+
+# UI reference
+@onready var distance_label = get_node("res://scenes/main_game_play.tscn/CanvasLayer/Label") as Label
+
+
+
 # movement related functions
 func _physics_process(delta):
 	var input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
@@ -40,6 +50,23 @@ func _physics_process(delta):
 		
 	
 	move_and_slide()
+	
+	
+	# Calculate distance traveled this frame
+	var distance_this_frame = global_position.distance_to(previous_position)
+	distance_covered += distance_this_frame
+	previous_position = global_position  # Update for next frame
+	
+	# Update UI
+	if distance_label:
+		distance_label.text = "Distance: %.0f / %.0f" % [distance_covered, target_distance]
+	
+	# Debug output (optional, can remove later)
+	print("Distance covered: ", distance_covered, " / ", target_distance)
+
+	# Check if target distance is reached
+	if distance_covered >= target_distance:
+		trigger_success_scene()
 
 func apply_screen_boundaries():
 	var viewport = get_viewport_rect().size
@@ -51,7 +78,11 @@ func apply_screen_boundaries():
 
 
 
-
+func trigger_success_scene():
+	# Load and change to the success scene
+	get_tree().change_scene_to_file("res://scenes/success_scene.tscn")
+	# Inside _physics_process, after updating distance_covered
+	print("Distance covered: ", distance_covered, " / ", target_distance)
 
 
 
@@ -77,6 +108,10 @@ func _ready():
 	# health
 	current_health = max_health
 	$IceDetector.area_entered.connect(_on_ice_collected)  # Detect Area2D collisions (ice)
+	
+
+	# Initialize distance tracking
+	previous_position = global_position
 
 # New function to handle ice collection
 func _on_ice_collected(area):
@@ -144,8 +179,12 @@ func die():
 	explosion.global_position = global_position
 	queue_free()
 	get_parent().add_child(explosion)
-	
-	  # Remove player
+	# Wait briefly for explosion to be visible (optional)
+	await get_tree().create_timer(1.0).timeout
+	# Transition to failure scene
+	get_tree().change_scene_to_file("res://scenes/failure_scene.tscn")
+	print("Transitioning to failure scene!")
+	 
 
 # Add this function to handle collisions
 
