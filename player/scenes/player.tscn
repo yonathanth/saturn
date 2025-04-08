@@ -14,7 +14,6 @@ size = Vector2(318, 160)
 scale = Vector2(0.5, 0.5)
 collision_mask = 3
 script = ExtResource("1_g2els")
-scroll_speed = null
 
 [node name="ShipSprite" type="Sprite2D" parent="."]
 rotation = 1.5708
@@ -34,4 +33,4 @@ shape = SubResource("RectangleShape2D_qhqgy")
 
 [node name="HealthManager" type="Node" parent="."]
 script = ExtResource("4_dqkch")
-max_health = 10.0
+max_health = 30.0

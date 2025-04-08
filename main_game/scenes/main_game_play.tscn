@@ -1,12 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://qed3wypkcc2s"]
+[gd_scene load_steps=9 format=3 uid="uid://qed3wypkcc2s"]
 
+[ext_resource type="Script" uid="uid://djy78782hr5jj" path="res://main_game/scripts/main_game_play.gd" id="1_b45k5"]
 [ext_resource type="PackedScene" uid="uid://bwsisa4mficrt" path="res://player/scenes/player.tscn" id="1_eg5v1"]
 [ext_resource type="PackedScene" uid="uid://bg7vfsttmmh3" path="res://health/scenes/health_bar.tscn" id="1_ktdyi"]
 [ext_resource type="PackedScene" uid="uid://48kbno3dl2w1" path="res://debris_field/scenes/debris_field.tscn" id="2_bgmuf"]
 [ext_resource type="Texture2D" uid="uid://cddnfbo3ol4q" path="res://background/assets/Nebula Blue.png" id="3_38vdp"]
 [ext_resource type="Script" uid="uid://dt5y1rndq2sws" path="res://background/scripts/background.gd" id="4_ktdyi"]
+[ext_resource type="PackedScene" uid="uid://c2a7dpwhxlt7y" path="res://main_game/scenes/game_start.tscn" id="7_vq4ug"]
+[ext_resource type="PackedScene" uid="uid://b2nlkp5mjwvax" path="res://main_game/scenes/game_over.tscn" id="8_sc1lp"]
 
 [node name="MainGamePlay" type="Node2D"]
+script = ExtResource("1_b45k5")
 
 [node name="HealthBar" parent="." instance=ExtResource("1_ktdyi")]
 z_index = 1
@@ -18,9 +22,15 @@ position = Vector2(154, 67)
 
 [node name="Background" type="Sprite2D" parent="."]
 z_index = -1
-position = Vector2(2, 2)
+position = Vector2(1, 2)
 texture = ExtResource("3_38vdp")
 centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 1152, 648)
 script = ExtResource("4_ktdyi")
+
+[node name="GameStart" parent="." instance=ExtResource("7_vq4ug")]
+z_index = 10
+
+[node name="GameOver" parent="." instance=ExtResource("8_sc1lp")]
+z_index = 10

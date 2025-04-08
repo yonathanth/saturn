@@ -2,8 +2,8 @@ extends Node
 
 class_name HealthManager
 
-@export var max_health: float = 100.0
-var current_health: float = 100.0
+@export var max_health: float = 1000.0
+var current_health: float = 1000.0
 var is_invulnerable: bool = false
 
 signal health_changed(current: float, maximum: float)
@@ -15,6 +15,7 @@ func _ready() -> void:
 
 func apply_damage(amount: float) -> void:
 	if is_invulnerable:
+		print("Damage ignored. Player is invulnerable.")
 		return
 	
 	current_health = max(0, current_health - amount)

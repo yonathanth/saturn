@@ -18,6 +18,6 @@ func _physics_process(delta: float) -> void:
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("player"):
 		return
-	if body.is_in_group("rocks"):  # Updated group name from "asteroids" to "rocks"
+	if body.is_in_group("rocks"):
 		body.destroy()
 	queue_free()

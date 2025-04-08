@@ -29,5 +29,3 @@ func spawn_rock() -> void:
 func spawn_ice() -> void:
 	var ice: Area2D = IceScene.instantiate()
 	ice.position = Vector2(screen_width + 50, randf_range(0, screen_height))
-	ice.apply_central_impulse(Vector2(randf_range(-400, -200), randf_range(-100, 100)))
-	add_child(ice)
