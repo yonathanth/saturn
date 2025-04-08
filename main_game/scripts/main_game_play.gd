@@ -6,7 +6,8 @@ extends Node2D
 @onready var game_start: Control = $StartMenu/GameStart
 
 func _ready() -> void:
-	# Set initial visibility for UI elements.
+	# Set initial visibility for UI elements
+	get_parent().get_tree().paused = true
 	game_start.visible = true
 	health_bar.visible = false
 	if game_over:

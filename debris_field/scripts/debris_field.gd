@@ -29,3 +29,4 @@ func spawn_rock() -> void:
 func spawn_ice() -> void:
 	var ice: Area2D = IceScene.instantiate()
 	ice.position = Vector2(screen_width + 50, randf_range(0, screen_height))
+	add_child(ice)
