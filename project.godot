@@ -13,7 +13,14 @@ config_version=5
 config/name="Level6"
 run/main_scene="uid://qed3wypkcc2s"
 config/features=PackedStringArray("4.4", "Forward Plus")
-config/icon="res://icon.svg"
+
+[autoload]
+
+GlobalInput="*res://global_input.gd"
+
+[dotnet]
+
+project/assembly_name="Level6"
 
 [input]
 
