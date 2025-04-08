@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 # Movement settings
-@export var move_speed: float = 300.0
+@export var move_speed: float = 72.0
 @export var screen_padding: float = 30.0
 @export var bullet_scene: PackedScene = preload("res://player/scenes/bullet.tscn")
 @export var fire_rate: float = 0.15
@@ -17,6 +17,10 @@ var last_collision_time: float = 0.0
 
 var can_shoot: bool = true
 var shoot_timer: Timer
+# Center of the screen (adjust based on your viewport size, e.g., 1152x720)
+var screen_center: Vector2 = Vector2(576, 360)
+# Maximum distance the player can move from the center
+var max_distance_from_center: float = 100.0  # Adjust this to control how far the player can move
 
 func _ready() -> void:
 	add_to_group("player")
@@ -27,7 +31,9 @@ func _ready() -> void:
 	health_manager.health_changed.connect(_on_health_changed)
 	health_manager.died.connect(_on_died)
 	ice_detector.area_entered.connect(_on_ice_collected)
-	
+	# Set the player's initial position to the center
+	global_position = screen_center
+
 func _physics_process(delta: float) -> void:
 	var input_dir: Vector2 = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	velocity = input_dir * move_speed
@@ -38,11 +44,10 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func apply_screen_boundaries() -> void:
-	var viewport: Vector2 = get_viewport_rect().size
-	global_position = global_position.clamp(
-		Vector2(screen_padding, screen_padding),
-		Vector2(viewport.x - screen_padding, viewport.y - screen_padding)
-	)
+	# Clamp the player's position to a small area around the center
+	var min_pos = screen_center - Vector2(max_distance_from_center, max_distance_from_center)
+	var max_pos = screen_center + Vector2(max_distance_from_center, max_distance_from_center)
+	global_position = global_position.clamp(min_pos, max_pos)
 
 func _process(delta: float) -> void:
 	if Input.is_action_pressed("shoot") and can_shoot:
