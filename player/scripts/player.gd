@@ -18,9 +18,9 @@ var last_collision_time: float = 0.0
 var can_shoot: bool = true
 var shoot_timer: Timer
 # Center of the screen (adjust based on your viewport size, e.g., 1152x720)
-var screen_center: Vector2 = Vector2(576, 360)
+var screen_center: Vector2 = Vector2(576, 200)
 # Maximum distance the player can move from the center
-var max_distance_from_center: float = 100.0  # Adjust this to control how far the player can move
+var max_distance_from_center: float = 330.0  # Adjust this to control how far the player can move
 
 func _ready() -> void:
 	add_to_group("player")
