@@ -12,15 +12,12 @@
 [node name="MainGamePlay" type="Node2D"]
 script = ExtResource("1_b45k5")
 
-[node name="HealthBar" parent="." instance=ExtResource("1_ktdyi")]
-z_index = 1
+[node name="GameElements" type="Node2D" parent="."]
 
-[node name="DebrisField" parent="." instance=ExtResource("2_bgmuf")]
-
-[node name="Player" parent="." instance=ExtResource("1_eg5v1")]
+[node name="Player" parent="GameElements" instance=ExtResource("1_eg5v1")]
 position = Vector2(154, 67)
 
-[node name="Background" type="Sprite2D" parent="."]
+[node name="Background" type="Sprite2D" parent="GameElements"]
 z_index = -1
 position = Vector2(1, 2)
 texture = ExtResource("3_38vdp")
@@ -29,8 +26,15 @@ region_enabled = true
 region_rect = Rect2(0, 0, 1152, 648)
 script = ExtResource("4_ktdyi")
 
-[node name="GameStart" parent="." instance=ExtResource("7_vq4ug")]
+[node name="HealthBar" parent="GameElements" instance=ExtResource("1_ktdyi")]
+z_index = 1
+
+[node name="DebrisField" parent="GameElements" instance=ExtResource("2_bgmuf")]
+
+[node name="StartMenu" type="Node2D" parent="."]
+
+[node name="GameStart" parent="StartMenu" instance=ExtResource("7_vq4ug")]
 z_index = 10
 
-[node name="GameOver" parent="." instance=ExtResource("8_sc1lp")]
+[node name="GameOver" parent="StartMenu" instance=ExtResource("8_sc1lp")]
 z_index = 10

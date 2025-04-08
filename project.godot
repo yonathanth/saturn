@@ -14,6 +14,10 @@ config/name="Level6"
 run/main_scene="uid://qed3wypkcc2s"
 config/features=PackedStringArray("4.4", "Forward Plus")
 
+[autoload]
+
+GlobalInput="*res://global_input.gd"
+
 [dotnet]
 
 project/assembly_name="Level6"
