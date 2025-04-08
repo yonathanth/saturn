@@ -10,7 +10,6 @@ func _ready() -> void:
 
 func show_game_over() -> void:
 	visible = true
-	get_tree().paused = true
 
 func _on_restart_pressed() -> void:
 	get_tree().paused = false
