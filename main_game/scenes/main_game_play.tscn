@@ -57,7 +57,7 @@ position = Vector2(154, 67)
 
 [node name="Background" type="Sprite2D" parent="GameElements"]
 z_index = -1
-position = Vector2(1, 2)
+position = Vector2(4, 5)
 texture = ExtResource("3_38vdp")
 centered = false
 region_enabled = true
@@ -73,6 +73,14 @@ z_index = 1
 
 [node name="GameStart" parent="StartMenu" instance=ExtResource("7_vq4ug")]
 z_index = 10
+offset_left = 324.0
+offset_top = 211.0
+offset_right = 324.0
+offset_bottom = 211.0
 
 [node name="GameOver" parent="StartMenu" instance=ExtResource("8_sc1lp")]
 z_index = 10
+offset_left = -25.0
+offset_top = -9.0
+offset_right = -25.0
+offset_bottom = -9.0

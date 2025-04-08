@@ -15,23 +15,25 @@ script = ExtResource("1_2s5yf")
 
 [node name="GameOverLabel" type="Label" parent="."]
 layout_mode = 0
-offset_right = 87.0
-offset_bottom = 23.0
+offset_left = 477.0
+offset_top = 265.0
+offset_right = 714.0
+offset_bottom = 298.0
 text = "Game Over"
 label_settings = SubResource("LabelSettings_w4pr8")
 
 [node name="RestartButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 13.0
-offset_top = 44.0
-offset_right = 99.0
-offset_bottom = 77.0
+offset_left = 546.0
+offset_top = 344.0
+offset_right = 632.0
+offset_bottom = 377.0
 text = "Restart"
 
 [node name="QuitButton" type="Button" parent="."]
 layout_mode = 0
-offset_left = 11.0
-offset_top = 84.0
-offset_right = 100.0
-offset_bottom = 119.0
+offset_left = 547.0
+offset_top = 403.0
+offset_right = 636.0
+offset_bottom = 438.0
 text = "Quit"

@@ -1,9 +1,9 @@
 extends Control
 
 func _ready() -> void:
-	$GameOverLabel.position = Vector2(576, 200)
-	$RestartButton.position = Vector2(476, 400)
-	$QuitButton.position = Vector2(476, 500)
+	#$GameOverLabel.position = Vector2(576, 200)
+	#$RestartButton.position = Vector2(476, 400)
+	#$QuitButton.position = Vector2(476, 500)
 	$RestartButton.pressed.connect(_on_restart_pressed)
 	$QuitButton.pressed.connect(_on_quit_pressed)
 	visible = false
